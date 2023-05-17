@@ -43,7 +43,6 @@ if (MASTER_PROJECT)
     target_link_libraries(witchburr-tests PRIVATE Catch2::Catch2WithMain
 	    goshhhy::witchburr)
     target_compile_options(witchburr-tests PRIVATE -Wall -Wextra -Wcast-qual -pedantic -pedantic-errors -Wfatal-errors -Wno-missing-braces)
-    endif()
 endif()
 
 # Export
