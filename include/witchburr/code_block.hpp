@@ -64,7 +64,10 @@ public:
         const std::uintptr_t end = (std::uintptr_t)mem + size;
 
         for (std::uintptr_t addr = ((std::uintptr_t)mem) & ~(dsize - 1); addr < end; addr += dsize) {
-        	__dcbf(addr);
+	        __asm__ volatile("dcbf %0, %1\n"
+                         : 
+                         : "b%" (0), "r"(addr)
+                         : "memory");
 	}
         __asm__ volatile("hwsync\n"
                          :
