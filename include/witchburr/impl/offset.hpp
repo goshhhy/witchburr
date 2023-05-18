@@ -1,4 +1,6 @@
+// SPDX-FileCopyrightText: Copyright (c) 2022 merryhime <https://mary.rs>
 // SPDX-FileCopyrightText: Copyright (c) 2023 linear cannon <dev@linear.network>
+// SPDX-License-Identifier: MIT
 
 #pragma once
 
@@ -56,6 +58,31 @@ private:
     template<typename Policy>
     friend class BasicCodeGenerator;
     std::variant<std::uint32_t, Label*, void*> m_payload;
+};
+
+template<std::size_t bitsize, std::size_t shift_amount>
+struct PageOffset {
+    PageOffset(const void* ptr)
+        : m_payload(ptr)
+    {}
+
+    PageOffset(Label& label)
+        : m_payload(&label)
+    {}
+
+    static std::uint32_t encode(std::uintptr_t current_addr, std::uintptr_t target)
+    {
+        std::uint64_t diff = (static_cast<std::uint64_t>(target) >> shift_amount) - (static_cast<std::uint64_t>(current_addr) >> shift_amount);
+        if (detail::sign_extend<bitsize>(diff) != diff)
+            throw WitchburrException{ExceptionType::OffsetOutOfRange};
+        diff &= detail::mask_from_size(bitsize);
+        return static_cast<std::uint32_t>(((diff & 3) << (bitsize - 2)) | (diff >> 2));
+    }
+
+private:
+    template<typename Policy>
+    friend class BasicCodeGenerator;
+    std::variant<Label*, const void*> m_payload;
 };
 
 } // namespace witchburr
