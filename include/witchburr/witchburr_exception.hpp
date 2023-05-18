@@ -8,19 +8,19 @@
 namespace witchburr {
 
 enum class ExceptionType {
-#define OAKNUT_EXCEPTION(tag, str) tag,
+#define WITCHBURR_EXCEPTION(tag, str) tag,
 #include "witchburr/impl/witchburr_exception.inc.hpp"
-#undef OAKNUT_EXCEPTION
+#undef WITCHBURR_EXCEPTION
 };
 
 inline const char* to_string(ExceptionType et)
 {
     switch (et) {
-#define OAKNUT_EXCEPTION(tag, str) \
+#define WITCHBURR_EXCEPTION(tag, str) \
     case ExceptionType::tag:       \
         return str;
 #include "witchburr/impl/witchburr_exception.inc.hpp"
-#undef OAKNUT_EXCEPTION
+#undef WITCHBURR_EXCEPTION
     default:
         return "unknown ExceptionType";
     }

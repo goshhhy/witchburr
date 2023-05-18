@@ -42,7 +42,7 @@ struct List {
         static_assert(std::is_base_of_v<VRegArranged, T> || std::is_base_of_v<Elem, T> || detail::is_instance_of_ElemSelector_v<T>);
 
         if (!verify(std::index_sequence_for<U...>{}, args...))
-            throw OaknutException{ExceptionType::InvalidList};
+            throw WitchburrException{ExceptionType::InvalidList};
     }
 
     constexpr auto operator[](unsigned elem_index) const
