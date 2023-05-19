@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include "enum.hpp"
 #include "witchburr/witchburr_exception.hpp"
 
 namespace witchburr {
