@@ -74,10 +74,11 @@ public:
                          :
                          : "memory");
 
+	int v = 0;
         for (std::uintptr_t addr = ((std::uintptr_t)mem) & ~(isize - 1); addr < end; addr += isize) {
-            __asm__ volatile("ic ivau, %0"
+            __asm__ volatile("icbi %0, %1"
                              :
-                             : "r"(addr)
+                             : "r" (v), "r"(addr)
                              : "memory");
         }
         __asm__ volatile("hwsync\nisync\n"
